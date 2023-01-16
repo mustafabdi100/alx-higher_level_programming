@@ -1,3 +1,10 @@
 #!/bin/bash
-# Script that takes in a URL, sends a request and displays the size of the body of the response
-curl -sI "$1" | grep "Content-Length" | cut -d " " -f2
+
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 url"
+  exit 1
+fi
+
+url="$1"
+curl -s -w '%{size_download}\n' -o /dev/null $url
+
