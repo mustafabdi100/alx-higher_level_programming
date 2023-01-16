@@ -1,3 +1,11 @@
 #!/bin/bash
-# ends a request to that URL displays the size of the response body
-curl -sI "$1" | grep -i Content-Length | cut -d " " -f2
+
+if [ $# -ne 1 ]; then
+  echo "Usage: $0 url"
+  exit 1
+fi
+
+url="$1"
+size=$(curl -sI "$url" | grep "Content-Length" | awk '{print $2}')
+echo "$size"
+
